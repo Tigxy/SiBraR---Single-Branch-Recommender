@@ -1,0 +1,90 @@
+base_configs:
+  - './../base_settings.yml'
+  - './../dataloader_conf.yml'
+  - './../dataset_onion18_conf.yml'
+  - './../train_eval_conf.yml'
+  - 'sbnet_onion18_conf.yml'
+
+run_settings:
+  seed: 42
+  device: cuda
+  batch_verbose: true
+
+wandb:
+  use_wandb: true
+
+learn:
+  n_epochs: 50
+  lr: 5e-5
+  wd: 1e-3
+  optimizer: 'adamw'
+  optimizing_metric: 'ndcg@10'
+  rec_loss: 'bpr'
+  loss_aggregator: 'mean'
+  max_patience: 5
+
+dataset:
+  n_negative_samples: 10
+  model_requires_train_interactions: true
+  model_requires_item_interactions: true
+
+model:
+  shared_common_dim: 128
+
+  user:
+    single_branch_hidden_layers: [ 256, 256, 256, 256 ]
+    preference_hidden_layers: [ ]
+    common_modality_dim: 512
+    activation_fn: 'relu'
+    single_branch_input_dropout: ~
+    normalize_single_branch_input: true
+
+    aggregation_fn: 'mean'
+    embedding_regularization_type: 'pairwise_single'
+    central_modality: 'interactions'
+
+    train_modalities: [ 'interactions', 'acg_with_unknown_mpnet' ]
+
+    apply_output_activation: true
+    apply_batch_normalization: true
+    apply_batch_norm_every: 2
+
+    regularization_weight: 1e-4
+    regularization_temperature: 1e-2
+
+    features:
+      - feature_name: 'interactions'
+        feature_hidden_layers: [ ]
+      - feature_name: 'age'
+        feature_hidden_layers: [ ]
+      - feature_name: 'gender'
+        feature_hidden_layers: [ ]
+      - feature_name: 'country'
+        feature_hidden_layers: [ ]
+      - feature_name: 'acg_with_unknown_mpnet'
+        feature_hidden_layers: [ ]
+
+  item:
+
+    single_branch_hidden_layers: [ ]
+#    single_branch_hidden_layers: [ 512, 512, 512, 256, 256 ]
+    preference_hidden_layers: [ ]
+    common_modality_dim: 128
+    activation_fn: 'relu'
+    single_branch_input_dropout: ~
+    normalize_single_branch_input: true
+
+    aggregation_fn: 'mean'
+    embedding_regularization_type: 'no_regularization'
+#    embedding_regularization_type: 'pairwise_single'
+    central_modality: 'interactions'
+
+    train_modalities: [ 'interactions' ]
+#    train_modalities: [ 'interactions', 'genres', 'jukebox' ]
+
+    apply_output_activation: true
+    apply_batch_normalization: true
+    apply_batch_norm_every: 2
+
+    regularization_weight: 1e-4
+    regularization_temperature: 1e-2

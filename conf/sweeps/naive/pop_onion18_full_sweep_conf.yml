@@ -1,0 +1,27 @@
+# Yaml Sweep Configuration
+
+program: sweep_agent.py
+method: grid
+metric:
+  name: max_optimizing_metric
+  goal: maximize
+name: pop-onion18-sweep
+project: <your-project-name>
+entity: <your-entity-name>
+run_cap: 10
+
+parameters:
+  # parameters that would otherwise be provided via the command line
+  algorithm_type:
+    value: pop
+  dataset_type:
+    value: onion18
+  split_type:
+    values: [ random, temporal, cold_start_user, cold_start_item, cold_start_both ]
+
+  # specify some base files so that we don't have to specify everything for the search
+  base_configs:
+    value:
+      # use regular run file as base file for hyperparameter search
+      - ./conf/single/algorithms/1_pop_conf.yml
+      - ./conf/sweeps/0_sweep_basic_conf.yml

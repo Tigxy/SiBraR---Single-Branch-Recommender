@@ -1,0 +1,12 @@
+dataset:
+  item_feature_definitions: # []
+    - name: title
+      type: vector
+    - name: image
+      type: vector
+    - name: description
+      type: vector
+
+eval:
+  calculate_group_metrics: false
+  user_group_features: [  ]

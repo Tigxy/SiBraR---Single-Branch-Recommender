@@ -1,0 +1,22 @@
+base_configs:
+  - './../base_settings.yml'
+  - './../dataloader_conf.yml'
+
+model:
+  embedding_dim: 512
+  use_user_bias: False
+  use_item_bias: True
+  use_global_bias: False
+
+learn:
+  n_epochs: 50
+  lr: 1e-3
+  wd: 1e-6
+  optimizer: 'adamw'
+  optimizing_metric: 'ndcg@10'
+  rec_loss: 'bpr'
+  loss_aggregator: 'mean'
+  max_patience: 5
+
+dataset:
+  n_negative_samples: 10

@@ -1,0 +1,70 @@
+# Yaml Sweep Configuration
+
+program: sweep_agent.py
+method: bayes
+metric:
+  name: max_optimizing_metric
+  goal: maximize
+name: sbnet-ml1m-random-u-sweep
+project: <your-project-name>
+entity: <your-entity-name>
+run_cap: 60
+
+parameters:
+  # parameters that would otherwise be provided via the command line
+  algorithm_type:
+    value: sbnet
+  dataset_type:
+    value: ml1m
+  split_type:
+    value: random
+
+  # specify some base files so that we don't have to specify everything for the search
+  base_configs:
+    value:
+      # use regular run file as base file for hyperparameter search
+      - ./conf/single/algorithms/sbnet_ml1m_conf.yml
+      - ./conf/sweeps/0_sweep_basic_conf.yml
+
+  # actual hyperparameters that we want to search over
+  model:
+    parameters:
+      shared_common_dim:
+        distribution: int_uniform
+        min: 16
+        max: 128
+      user:
+        parameters:
+          common_modality_dim:
+            distribution: int_uniform
+            min: 16
+            max: 128
+          single_branch_input_dropout:
+            distribution: log_uniform_values
+            min: 1e-9
+            max: 0.5
+          train_modalities:
+            values: [ [ 'gender' ],
+                      [ 'occupation' ],
+                      [ 'gender', 'occupation' ],
+                      [ 'gender', 'interactions' ],
+                      [ 'occupation', 'interactions' ],
+                      [ 'gender', 'occupation', 'interactions' ] ]
+      item:
+        parameters:
+          common_modality_dim:
+            value: 64
+          single_branch_input_dropout:
+            value: 0.1
+          train_modalities:
+            value: [ 'interactions' ]
+  learn:
+    parameters:
+      lr:
+        distribution: log_uniform_values
+        min: 1e-5
+        max: 1e-2
+      wd:
+        distribution: log_uniform_values
+        min: 1e-6
+        max: 1e-2

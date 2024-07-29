@@ -1,0 +1,47 @@
+split:
+  seed: 42
+  split_type: coldstart
+  cold_start_type: both
+  ratios: [ 0.8, 0.1, 0.1 ]
+
+interactions:
+  k_core: 5
+  min_n_interactions: 1
+
+user_features:
+  - name: gender
+    type: categorical
+    preprocessing:
+      - kind: filter_missing
+      - kind: filter_values
+        parameters:
+          values: [ M, F ]
+
+  - name: age
+    type: discrete
+    preprocessing:
+      - kind: filter_missing
+      - kind: filter_range
+        parameters:
+          min_value: 10
+          max_value: 80
+    normalization:
+      - kind: minmax
+        parameters: { }
+
+  - name: occupation
+    type: categorical
+    preprocessing:
+      - kind: filter_missing
+
+  - name: occupation_str
+    type: categorical
+    preprocessing:
+      - kind: filter_missing
+
+item_features:
+  - name: plot_mpnet
+    type: vector
+
+  - name: genres
+    type: tag

@@ -1,0 +1,15 @@
+split:
+  seed: 42
+  split_type: random
+  ratios: [ 0.8, 0.1, 0.1 ]
+
+interactions:
+  k_core: 5
+  min_n_interactions: 1
+
+item_feature:
+  - name: title
+    type: vector
+
+  - name: image
+    type: vector

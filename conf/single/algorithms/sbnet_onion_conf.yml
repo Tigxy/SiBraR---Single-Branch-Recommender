@@ -1,0 +1,58 @@
+base_configs:
+  - './../base_settings.yml'
+  - './../dataloader_conf.yml'
+  - './../dataset_onion_conf.yml'
+
+learn:
+  n_epochs: 50
+  lr: 1e-3
+  wd: 1e-6
+  optimizer: 'adamw'
+  optimizing_metric: 'ndcg@10'
+  rec_loss: 'bpr'
+  loss_aggregator: 'mean'
+  max_patience: 5
+
+dataset:
+  n_negative_samples: 10
+  model_requires_train_interactions: true
+  model_requires_item_interactions: true
+
+model:
+  shared_common_dim: 64
+
+  user:
+    single_branch_hidden_layers: [ ]
+    preference_hidden_layers: [ ]
+    common_modality_dim: 64
+    activation_fn: 'relu'
+    single_branch_input_dropout: ~
+
+    features:
+      - feature_name: 'interactions'
+        feature_hidden_layers: [ ]
+      - feature_name: 'age'
+        feature_hidden_layers: [ ]
+      - feature_name: 'gender'
+        feature_hidden_layers: [ ]
+      - feature_name: 'country'
+        feature_hidden_layers: [ ]
+      - feature_name: 'acg_with_unknown_mpnet'
+        feature_hidden_layers: [ 128 ]
+
+  item:
+    single_branch_hidden_layers: [ 64 ]
+    preference_hidden_layers: [ ]
+    common_modality_dim: 64
+    activation_fn: 'relu'
+    single_branch_input_dropout: 0.2
+
+    features:
+      - feature_name: 'interactions'
+        feature_hidden_layers: [ ]
+      - feature_name: 'ivec256'
+        feature_hidden_layers: [ ]
+      - feature_name: 'bert'
+        feature_hidden_layers: [ ]
+      - feature_name: 'musicnn'
+        feature_hidden_layers: [ ]

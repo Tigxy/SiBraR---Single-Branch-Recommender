@@ -1,0 +1,46 @@
+# Yaml Sweep Configuration
+
+program: sweep_agent.py
+method: bayes
+metric:
+  name: max_optimizing_metric
+  goal: maximize
+name: mf-ml1m-full-sweep
+project: <your-project-name>
+entity: <your-entity-name>
+run_cap: 120
+
+parameters:
+  # parameters that would otherwise be provided via the command line
+  algorithm_type:
+    value: mf
+  dataset_type:
+    value: ml1m
+  split_type:
+    values: [ random, temporal, cold_start_user, cold_start_item, cold_start_both ]
+
+  # specify some base files so that we don't have to specify everything for the search
+  base_configs:
+    value:
+      # use regular run file as base file for hyperparameter search
+      - ./conf/single/algorithms/mf_ml1m_conf.yml
+      - ./conf/sweeps/0_sweep_basic_conf.yml
+
+  # actual hyperparameters that we want to search over
+  model:
+    parameters:
+      embedding_dim:
+        distribution: int_uniform
+        min: 32
+        max: 512
+
+  learn:
+    parameters:
+      lr:
+        distribution: log_uniform_values
+        min: 1e-5
+        max: 1e-2
+      wd:
+        distribution: log_uniform_values
+        min: 1e-6
+        max: 1e-2

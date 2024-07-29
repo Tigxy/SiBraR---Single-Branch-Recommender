@@ -1,0 +1,31 @@
+dataset:
+  user_feature_definitions:
+    - name: age
+      type: continuous
+    - name: gender
+      type: categorical
+    - name: country
+      type: categorical
+    - name: acg_with_unknown_mpnet
+      type: vector
+
+  item_feature_definitions: # []
+    - name: ivec256
+      type: vector
+    - name: resnet
+      type: vector
+    - name: musicnn
+      type: vector
+    - name: jukebox
+      type: vector
+    - name: bert
+      type: vector
+    - name: resnet
+      type: vector
+    - name: genres
+      type: tag
+      tag_split_sep: "|"
+
+eval:
+  calculate_group_metrics: true
+  user_group_features: [ 'gender' ]

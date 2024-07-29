@@ -1,0 +1,19 @@
+dataset:
+  user_feature_definitions:
+    - name: age
+      type: continuous
+    - name: gender
+      type: categorical
+    - name: occupation
+      type: categorical
+
+  item_feature_definitions:
+    - name: genres
+      type: tag
+      tag_split_sep: "|"
+    - name: plot_mpnet
+      type: vector
+
+eval:
+  calculate_group_metrics: true
+  user_group_features: [ 'gender' ]

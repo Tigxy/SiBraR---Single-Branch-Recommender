@@ -1,0 +1,35 @@
+base_configs:
+  - './../base_settings.yml'
+  - './../dataloader_conf.yml'
+  - './../dataset_onion_conf.yml'
+
+learn:
+  n_epochs: 50
+  lr: 1e-3
+  wd: 1e-6
+  optimizer: 'adamw'
+  optimizing_metric: 'ndcg@10'
+  rec_loss: 'bpr'
+  loss_aggregator: 'mean'
+  max_patience: 5
+
+dataset:
+  n_negative_samples: 10
+  model_requires_train_interactions: true
+  model_requires_item_interactions: true
+
+model:
+  shared_common_dim: 64
+  sampling_seed: 42
+
+  user:
+    features: []
+    preference_layers: [64]
+    common_hidden_layers: []
+    activation_fn: 'relu'
+
+  item:
+    features: []
+    preference_layers: [64]
+    common_hidden_layers: []
+    activation_fn: 'relu'

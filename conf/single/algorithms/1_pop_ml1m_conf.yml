@@ -1,0 +1,6 @@
+base_configs:
+  - './1_pop_conf.yml'
+  - './../dataset_ml1m_conf.yml'
+
+dataset:
+  model_requires_pop_distribution: true

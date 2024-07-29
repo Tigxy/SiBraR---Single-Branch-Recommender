@@ -1,0 +1,81 @@
+split:
+  seed: 42
+  split_type: coldstart
+  cold_start_type: user
+  ratios: [ 0.8, 0.1, 0.1 ]
+
+interactions:
+  k_core: 5
+  min_n_interactions: 2
+
+user_features:
+  - name: gender
+    type: categorical
+    preprocessing:
+      - kind: filter_missing
+      - kind: filter_values
+        parameters:
+          values: [ m, f ]
+
+  - name: age
+    type: discrete
+    preprocessing:
+      - kind: filter_missing
+      - kind: filter_range
+        parameters:
+          min_value: 10
+          max_value: 80
+    normalization:
+      - kind: minmax
+        parameters: { }
+
+  - name: country
+    type: categorical
+    preprocessing:
+      - kind: filter_missing
+      - kind: filter_top
+        parameters:
+          top_n: 10
+
+  - name: a_without_unknown_mpnet
+    type: vector
+    normalization: ~
+
+  - name: g_without_unknown_mpnet
+    type: vector
+    normalization: ~
+
+  - name: c_without_unknown_mpnet
+    type: vector
+    normalization: ~
+
+  - name: acg_with_unknown_mpnet
+    type: vector
+    normalization: ~
+
+item_features:
+  - name: ivec256
+    type: vector
+    normalization: ~
+
+  - name: bert
+    type: vector
+    normalization: ~
+
+  - name: musicnn
+    type: vector
+    normalization: ~
+
+  - name: jukebox
+    type: vector
+    normalization: ~
+
+  - name: resnet
+    type: vector
+    normalization: ~
+
+  - name: genres
+    type: tag
+    preprocessing:
+      - kind: filter_missing
+    normalization: ~

@@ -1,0 +1,3 @@
+base_configs:
+  - './../base_settings.yml'
+  - './../dataloader_conf.yml'

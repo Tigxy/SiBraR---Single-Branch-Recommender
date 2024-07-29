@@ -1,0 +1,6 @@
+base_configs:
+  - './../base_settings.yml'
+  - './../dataloader_conf.yml'
+
+dataset:
+  model_requires_pop_distribution: true

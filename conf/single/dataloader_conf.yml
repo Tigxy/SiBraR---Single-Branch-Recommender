@@ -1,0 +1,27 @@
+dataset:
+  use_dataset_negative_sampler: false
+#  use_dataset_negative_sampler: true
+#  negative_sampling_strategy: uniform
+  negative_sampling_strategy: uniform_recbole
+
+eval:
+  top_k: [1, 10, 20]
+  calculate_std: false
+
+train_loader:
+#  batch_size: 4
+  batch_size: 256
+  shuffle: true
+  num_workers: 0
+  prefetch_factor: ~
+  persistent_workers: false
+#  num_workers: 4
+#  prefetch_factor: 8
+#  persistent_workers: true
+
+val_loader:
+  batch_size: 256
+  shuffle: false
+  num_workers: 0
+  prefetch_factor: ~
+  persistent_workers: false

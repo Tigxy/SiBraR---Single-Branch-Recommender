@@ -1,0 +1,53 @@
+program: sweep_agent.py
+method: bayes
+metric:
+  name: max_optimizing_metric
+  goal: maximize
+name: dmf-onion18-item
+project: <your-project-name>
+entity: <your-entity-name>
+
+# for item it doesn't matter, as each item vector is the transformed
+# first layer bias term, thus constant for all the items
+run_cap: 1
+
+parameters:
+  # parameters that would otherwise be provided via the command line
+  algorithm_type:
+    value: dmf
+  dataset_type:
+    value: onion18
+  split_type:
+    value: cold_start_item
+
+  # specify some base files so that we don't have to specify everything for the search
+  base_configs:
+    value:
+      # use regular run file as base file for hyperparameter search
+      - ./conf/single/algorithms/dmf_onion_conf.yml
+      - ./conf/sweeps/0_sweep_basic_conf.yml
+
+  # actual hyperparameters that we want to search over
+  model:
+    parameters:
+      u_mid_layers:
+        value: [ ]
+
+      i_mid_layers:
+        value: [ ]
+
+      final_dimension:
+        distribution: int_uniform
+        min: 8
+        max: 256
+
+  learn:
+    parameters:
+      lr:
+        distribution: log_uniform_values
+        min: 1e-5
+        max: 1e-2
+      wd:
+        distribution: log_uniform_values
+        min: 1e-6
+        max: 1e-2

@@ -1,0 +1,9 @@
+train_loader:
+  num_workers: 0
+  prefetch_factor: ~
+  persistent_workers: false
+
+val_loader:
+  num_workers: 0
+  prefetch_factor: ~
+  persistent_workers: false

@@ -1,0 +1,4 @@
+train_eval:
+  top_k: [ 10 ]
+  metrics: [ 'ndcg', 'recall' ]
+  calculate_std: false

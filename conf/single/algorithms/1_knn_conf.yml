@@ -1,0 +1,12 @@
+base_configs:
+  - './../base_settings.yml'
+  - './../dataloader_conf.yml'
+
+model:
+  k: 10
+  alg: uknn
+  sim_func_params:
+    sim_func_name: cosine
+    alpha: ~
+    beta: ~
+    shrinkage: 0.

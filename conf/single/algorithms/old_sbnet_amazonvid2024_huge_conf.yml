@@ -1,0 +1,77 @@
+base_configs:
+  - './../base_settings.yml'
+  - './../dataloader_conf.yml'
+  - './../dataset_amazonvid2024_conf.yml'
+  - './../train_eval_conf.yml'
+  - 'sbnet_amazonvid2024_conf.yml'
+
+run_settings:
+  seed: 42
+  device: cuda
+  batch_verbose: true
+
+wandb:
+  use_wandb: true
+
+learn:
+  n_epochs: 30
+  lr: 5e-5
+  wd: 1e-3
+  optimizer: 'adamw'
+  optimizing_metric: 'ndcg@10'
+  rec_loss: 'bpr'
+  loss_aggregator: 'mean'
+  max_patience: 5
+
+dataset:
+  n_negative_samples: 10
+  model_requires_train_interactions: true
+  model_requires_item_interactions: true
+
+model:
+  shared_common_dim: 128
+
+  user:
+    embedding_dim: -1
+    feature_name: 'interactions'
+    activation_fn: 'relu'
+
+#    single_branch_hidden_layers: [ ]
+#    preference_hidden_layers: [ ]
+#    common_modality_dim: 256
+#    single_branch_input_dropout: ~
+#    normalize_single_branch_input: true
+
+    train_modalities: [ 'interactions' ]
+
+#    aggregation_fn: 'mean'
+    embedding_regularization_type: 'no_regularization'
+
+#    apply_output_activation: true
+#    apply_batch_normalization: true
+
+  item:
+    single_branch_hidden_layers: [ 512, 512, 512, 256, 256 ]
+    preference_hidden_layers: [ ]
+    common_modality_dim: 512
+    activation_fn: 'relu'
+    single_branch_input_dropout: 2e-2
+    normalize_single_branch_input: true
+
+    aggregation_fn: 'mean'
+    embedding_regularization_type: 'central_modality'
+    central_modality: 'interactions'
+
+    train_modalities:
+      values:
+        [ [ 'interactions', 'title' ],
+          # [ 'interactions', 'image' ],
+          # [ 'interactions', 'description' ],
+          # [ 'interactions', 'title', 'image'],
+          # [ 'interactions', 'description', 'image'],
+          # [ 'interactions', 'title', 'description'],
+          ]
+
+    apply_output_activation: true
+    apply_batch_normalization: true
+    apply_batch_norm_every: 2

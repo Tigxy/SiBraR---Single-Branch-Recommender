@@ -1,0 +1,43 @@
+name: hassaku
+channels:
+  - defaults
+  - conda-forge
+  - nvidia
+  - pytorch
+dependencies:
+  - python==3.11  # PyTorch currently (Dec23) does not support 3.12
+  - numpy
+  - wandb
+  - pytorch-cuda==12.1
+  - pytorch==2.1.2
+  - pandas
+  - bottleneck
+  - scikit-learn
+  - hyperopt
+  - implicit
+  - matplotlib
+  - seaborn
+  - ipympl
+  - yaml
+  - dask
+  - ray-default
+  - pyarrow
+  - notebook
+  - nb_conda_kernels
+  - ipykernel
+  - param
+  - mashumaro
+  - pip
+  - dill
+  - conda-forge::accelerate
+  - conda-forge::transformers
+  - conda-forge::sentence-transformers
+  - pip:
+      - gdown # to download large files from Google Drive
+      - zenodopy # to download files from Zenodo
+      - pyarrow-hotfix
+      - natsort
+      - git+https://github.com/tigxy/recommender-metrics.git
+      - wikipedia
+      - timeout-decorator
+      - palettable

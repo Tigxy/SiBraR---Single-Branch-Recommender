@@ -1,0 +1,63 @@
+# Yaml Sweep Configuration
+
+program: sweep_agent.py
+method: grid
+metric:
+  name: max_optimizing_metric
+  goal: maximize
+name: sbnet-onion18-random-norm-grid
+project: <your-project-name>
+entity: <your-entity-name>
+run_cap: 40
+
+parameters:
+  # parameters that would otherwise be provided via the command line
+  algorithm_type:
+    value: sbnet
+  dataset_type:
+    value: onion18
+  split_type:
+    value: random
+
+  # specify some base files so that we don't have to specify everything for the search
+  base_configs:
+    value:
+      # use regular run file as base file for hyperparameter search
+      - ./conf/single/algorithms/sbnet_onion18_huge_no-user_conf.yml
+      - ./conf/sweeps/0_sweep_basic_conf.yml
+
+  # actual hyperparameters that we want to search over
+  model:
+    parameters:
+      shared_common_dim:
+        value: 350
+
+      user:
+        parameters:
+          feature_name:
+            value: 'user_embedding'
+
+      item:
+        parameters:
+          single_branch_hidden_layers:
+            value: [ 512, 512, 512, 512 ]
+
+          regularization_weight:
+            values: [ 0, 1e-2, 1e-3, 1e-4, 1e-5 ]
+
+          regularization_temperature:
+            values: [ 2e-1, 3.33333e-1, 2e-2, 3.33333e-2, 2e-3, 3.33333e-3, 2e-4, 3.33333e-4 ]
+#            values: [ 1e-2, 5e-3, 1e-3, 5e-4, 1e-4 ]
+#            values: [ 5e-1, 1e-1, 5e-2, 1e-2, 5e-3, 1e-3 ]
+
+          train_modalities:
+            value: [ 'interactions', 'genres', 'jukebox', 'bert', 'resnet' ]
+
+  learn:
+    parameters:
+      n_epochs:
+        value: 30
+      lr:
+        value: 1e-3
+      wd:
+        value: 5e-4

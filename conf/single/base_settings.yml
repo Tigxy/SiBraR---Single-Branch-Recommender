@@ -1,0 +1,11 @@
+run_settings:
+  seed: 42
+  device: cuda  # cpu or cuda
+#  device: cpu  # cpu or cuda
+  batch_verbose: true
+
+wandb:
+  use_wandb: false
+
+profile_training: false
+#profile_training: true

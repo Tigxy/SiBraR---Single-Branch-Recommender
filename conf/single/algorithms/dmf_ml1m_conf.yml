@@ -1,0 +1,25 @@
+base_configs:
+  - './../base_settings.yml'
+  - './../dataloader_conf.yml'
+
+model:
+  u_mid_layers: 64
+  i_mid_layers: 64
+  final_dimension: 16
+  mu: 1.e-6
+  normalize_interactions: false
+  normalize_representations: false
+
+learn:
+  n_epochs: 50
+  lr: 1e-3
+  wd: 1e-6
+  optimizer: 'adamw'
+  optimizing_metric: 'ndcg@10'
+  rec_loss: 'bpr'
+  loss_aggregator: 'mean'
+  max_patience: 5
+
+dataset:
+  model_requires_train_interactions: true
+  model_requires_item_interactions: true

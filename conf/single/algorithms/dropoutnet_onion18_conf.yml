@@ -1,0 +1,83 @@
+base_configs:
+  - './../base_settings.yml'
+  - './../dataloader_conf.yml'
+  - './../dataset_onion18_conf.yml'
+
+learn:
+  n_epochs: 50
+  lr: 1e-3
+  wd: 1e-6
+  optimizer: 'adamw'
+  optimizing_metric: 'ndcg@10'
+  rec_loss: 'bpr'
+  loss_aggregator: 'mean'
+  max_patience: 5
+
+dataset:
+  n_negative_samples: 10
+  model_requires_train_interactions: true
+  model_requires_item_interactions: true
+
+model:
+  shared_common_dim: 64
+  sampling_seed: 42
+
+  user:
+    features:
+      - feature_name: 'gender'
+        embedding_dim: 8
+        pre_embedding_layers: []
+        post_embedding_layers: []
+        activation_fn: 'relu'
+
+      - feature_name: 'country'
+        embedding_dim: 8
+        pre_embedding_layers: [ ]
+        post_embedding_layers: [ ]
+        activation_fn: 'relu'
+
+    preference_layers: [64]
+    common_hidden_layers: [64]
+    activation_fn: 'relu'
+
+  item:
+    features:
+      - feature_name: 'bert'
+        embedding_dim: 64
+        pre_embedding_layers: []
+        post_embedding_layers: []
+        activation_fn: 'relu'
+
+      - feature_name: 'musicnn'
+        embedding_dim: 64
+        pre_embedding_layers: []
+        post_embedding_layers: []
+        activation_fn: 'relu'
+
+      - feature_name: 'jukebox'
+        embedding_dim: 64
+        pre_embedding_layers: []
+        post_embedding_layers: []
+        activation_fn: 'relu'
+
+      - feature_name: 'ivec256'
+        embedding_dim: 64
+        pre_embedding_layers: []
+        post_embedding_layers: []
+        activation_fn: 'relu'
+
+      - feature_name: 'genres'
+        embedding_dim: 64
+        pre_embedding_layers: []
+        post_embedding_layers: []
+        activation_fn: 'relu'
+
+      - feature_name: 'resnet'
+        embedding_dim: 64
+        pre_embedding_layers: []
+        post_embedding_layers: []
+        activation_fn: 'relu'
+
+    preference_layers: [64]
+    common_hidden_layers: [64]
+    activation_fn: 'relu'

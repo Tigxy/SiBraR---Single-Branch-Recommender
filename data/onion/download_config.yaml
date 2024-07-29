@@ -1,0 +1,25 @@
+split:
+  seed: 42
+  split_type: random
+  ratios: [ 0.8, 0.1, 0.1 ]
+
+interactions:
+  k_core: 5
+  min_n_interactions: 2
+
+user_features:
+  - name: gender
+    type: categorical
+
+  - name: age
+    type: discrete
+
+  - name: country
+    type: categorical
+
+item_features:
+  - name: ivec256
+    type: vector
+
+  - name: resnet
+    type: vector
