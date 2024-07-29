@@ -3,8 +3,8 @@
 This repository accompanies our corresponding RecSys2024 submission
 `A Multi-Modal Single-Branch Embedding Network for Recommendation in Cold-Start and Missing Modality Scenarios`.
 
-Originally, this repository is a fork of the [Hassaku](https://github.com/karapostK/hassaku) framework, extended by the
-support of training and evaluation of content-based recommender systems for cold-start scenarios.
+Originally, this repository is a fork of the [Hassaku](https://github.com/karapostK/hassaku) framework, extended and refactored to 
+support the training and evaluation of content-based recommender systems for cold-start scenarios.
 
 ## Before you start
 Please note that we use different names for the algorithms mentioned and experiemented with in the paper, than we use here in the code. While different, they still function the same way as described in their respective publications. Thus, here is a list of algorithm names and their shorthands:
@@ -12,7 +12,7 @@ Please note that we use different names for the algorithms mentioned and experie
 | Algorithm name (paper) | Algorithm shorthand (code) | Algorithm class (code) | Source file |
 |----------------|-------------------------------------------------------|--------------------------------|--------------------------|
 | $SiBraR$       | SBNet                                                 | SingleBranchNet                | [algorithms/sgd_alg.py](algorithms/sgd_alg.py)    |
-| $CLCRec$       | (depending on where try user or item side-information) |                                |                          |
+| $CLCRec$       | (depending on whether we use user or item side-information) |                                |                          |
 |                | IFMF                                                  | ItemFeatureMatrixFactorization | [algorithms/sgd_alg.py](algorithms/sgd_alg.py) |
 |                | UFMF                                                  | UserFeatureMatrixFactorization | [algorithms/sgd_alg.py](algorithms/sgd_alg.py) |
 | $DropoutNet$   | DropoutNet                                            | DropoutNet                     | [algorithms/sgd_alg.py](algorithms/sgd_alg.py) |
@@ -98,15 +98,15 @@ options:
                         Type of experiment to carry out
   --log LOG
 ```
-Note that while other datasets are also visible, they are not yet supported by the changes to the framework.  
+Note that while other datasets are also visible, they are not yet supported due to the extensive changes to the framework.  
 
 ### Run a sweep
 For sweeping, you need to have a [Weights and Biases](https://wandb.ai/) account. You can then run any of
-the provided config files in the [conf/sweeps](conf/sweeps) directory:
-1) `wandb sweep <your-sweep-config>`
-2) 
+the provided config files* in the [conf/sweeps](conf/sweeps) directory:
+1) Start the sweep: `wandb sweep <your-sweep-config>`
+2) Start the sweep agent(s):
    1) `wandb agent {sweep_id from the previous step}`
-   2) or to run multiple sweeps in parallel, [`run_agent.py`](run_agent.py):
+   2) or to run multiple agents in parallel, see [`run_agent.py`](run_agent.py):
 ```
 usage: run_agent.py [-h] [--sweep_id SWEEP_ID] [--gpus GPUS] [--n_parallel N_PARALLEL]
 
@@ -120,7 +120,8 @@ options:
                         environmentvariable.
   --n_parallel N_PARALLEL, -p N_PARALLEL
                         The number of agents to run in parallel on each GPU
-      ```
+```
 
-**Although there are lots of configs defined, due to inplace modification of them, they are by far not an 
-exhaustive list of experiments that we performed!**
+
+\***Although there are lots of configs defined, due to inplace modification of them, they are by far not an 
+exhaustive list of the experiments that we performed!**
