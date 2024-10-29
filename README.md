@@ -51,6 +51,30 @@ python data/onion/onion1mon_downloader.py \
 --year 2018
 ```
 
+For the `ml-1m` dataset, please execute
+```
+python data/ml1m/movielens1m_downloader.py \
+--config_file data/ml1m/download_config.yaml 
+--save_path <your-data-storage-location>/ml-1m
+```
+
+Once downloaded, please follow the instructions in [`data_paths.py`](data_paths.py) to update where your 
+datasets are stored. There, you can also configure where to store the results of your experiments.
+
+### Additional features
+In case you want to use non-standard features of the different datasets, please check out all the other scripts in the data folders. 
+
+#### MovieLens-1M plots
+To get the movie plots for MovieLens-1M, download the processed files 
+from [here](https://drive.google.com/drive/folders/1Zo1FJ3PL8oa3SIdM60w3hnVrA_DAhAcE?usp=sharing) and place them in
+`<your-data-storage-location>/ml-1m/processed_dataset`. 
+
+You can also obtain the files by executing the following:
+```
+python data/ml1m/movielens1m_plot_downloader.py
+``` 
+which will (1) crawl Wikipedia for the plots and (2) embed them with MPNet.
+
 ### Preprocess the datasets
 Once a dataset is downloaded, you can start its preprocession. Check out 
 [data/preprocess_dataset.py](data/preprocess_dataset.py) for more information:
@@ -68,18 +92,51 @@ options:
                         {data_path}/{split_config}
 ```
 
+#### Example call for MovieLens-1M random split
+```
+python data/preprocess_dataset.py \
+--config_file data/ml1m/split_config_random.yaml \
+--data_path datasets/ml-1m/processed_dataset
+```
+
 ### Run an experiment
-For sweeping, you need to have a [Weights and Biases](https://wandb.ai/) account. 
 For running a single experiment, simply select one of the configs provided 
 in [conf/single/algorithms](conf/single/algorithms) or create your own config file and run it:
 
+#### Verify installation
+To verify your installation, let us run simple Pop and SiBraR recommenders with the following:
+```
+# Pop recommender
+python run_experiment.py \
+--algorithm pop \
+--dataset ml1m \
+--split_type random \
+--conf_path conf/single/algorithms/1_pop_ml1m_conf.yml
+
+# SiBraR recommender ('sbnet' in code)
+python run_experiment.py 
+--algorithm sbnet 
+--dataset ml1m 
+--split_type random 
+--conf_path conf/single/algorithms/sbnet_ml1m_conf.yml
+```
+
+#### W&B Logging
+If you want to log your experiments to [Weights and Biases](https://wandb.ai/), you need to specify so in the configs 
+by setting `use_wandb: true` in [base_settings.yml](conf/single/base_settings.yml) or in specific config files. 
+Moreover, you need to 
+1. login into wandb `wandb login`
+2. edit [`wandb_conf.py`](wandb_conf.py) to configure to which project and entity to log to
+
+#### Full description
+Here is the full description on the experiment script, which you can call to run a single experiment.
 ```
 usage: run_experiment.py [-h]
                          [--algorithm {uknn,iknn,ifknn,mf,ifeatmf,sgdbias,pop,rand,rbmf,uprotomf,iprotomf,uiprotomf,acf,svd,als,p3alpha,ease,slim,uprotomfs,iprotomfs,uiprotomfs,ecf,dmf,dropoutnet,sbnet,ufeatmf}]
                          [--dataset {ml100k,ml1m,ml10m,amazonvid2018,lfm2b2020,deliveryherosg,onion,onion18,onion18g,kuai,amazonvid2024}]
                          [--dataset_path DATASET_PATH]
                          [--split_type {random,temporal,cold_start_user,cold_start_item,cold_start_both}]
-                         [--conf_path CONF_PATH] [--run_type {train_val,test,train_val_test,gather}] [--log LOG]
+                         [--conf_path CONF_PATH] [--run_type {train_val,test,train_val_test,gather}]
 
 Start an experiment
 
@@ -98,7 +155,6 @@ options:
                         Path to the .yml containing the configuration
   --run_type {train_val,test,train_val_test,gather}, -t {train_val,test,train_val_test,gather}
                         Type of experiment to carry out
-  --log LOG
 ```
 Note that while other datasets are also visible, they are not yet supported due to the extensive changes to the framework.  
 
