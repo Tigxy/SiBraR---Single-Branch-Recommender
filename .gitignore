@@ -152,3 +152,5 @@ fabric.properties
 
 other/wandb_api_key
 notebooks/results/
+results/
+datasets/
