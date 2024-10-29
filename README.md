@@ -23,12 +23,14 @@ Please note that we use different names for the algorithms mentioned and experie
 
 ## Installation
 1) Clone the repo `git clone <this-repo-url>`
-2) Update your conda installation
+2) Move into repository `cd SiBraR---Single-Branch-Recommender`
+3) Update your conda installation
    1) `conda install python=3.10`
    2) `conda update conda`
    3) `conda config --set solver libmamba`
-3) Install the environment with all its requirements `conda env create --file=environment.yml`
-4) Activate the environment `conda activate hassaku`
+4) Install the environment with all its requirements `conda env create --file=environment.yml`
+5) Activate the environment `conda activate hassaku`
+6) Install Hassaku framework `python -m pip install -e .`
 
 ## Using the framework
 The following commands assume that the conda environment is already activated (`conda activate hassaku`).
