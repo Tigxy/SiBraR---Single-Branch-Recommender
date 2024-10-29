@@ -1,10 +1,23 @@
 # SiBraR - A Multi-Modal Single-Branch Embedding Network for Recommendation in Cold-Start and Missing Modality Scenarios
 
 This repository accompanies our corresponding RecSys2024 submission
-`A Multi-Modal Single-Branch Embedding Network for Recommendation in Cold-Start and Missing Modality Scenarios`.
+`A Multi-Modal Single-Branch Embedding Network for Recommendation in Cold-Start and Missing Modality Scenarios`. 
+You can find our paper [here](https://dl.acm.org/doi/10.1145/3640457.3688138), as well as additional resources on our [website](https://hcai.at/publications/2024_11_RecSys_ganhor_moscati_sibrar/).
 
 Originally, this repository is a fork of the [Hassaku](https://github.com/karapostK/hassaku) framework, extended and refactored to 
 support the training and evaluation of content-based recommender systems for cold-start scenarios.
+
+## Table of Content
+- [Before you start](#before-you-start)
+- [Installation](#installation)
+- [Datasets](#datasets)
+  - [Dataset Retrieval](#retrieving-the-datasets)
+  - [Additional features](#additional-features)
+  - [Dataset Preprocessing](#preprocess-the-datasets)
+- [Experiments](#experiments)
+  - [Running a single experiment](#run-a-single-experiment)
+  - [Running a sweep](#run-a-sweep)
+- [Citation](#citation)
 
 ## Before you start
 Please note that we use different names for the algorithms mentioned and experiemented with in the paper, than we use here in the code. While different, they still function the same way as described in their respective publications. Thus, here is a list of algorithm names and their shorthands:
@@ -32,7 +45,8 @@ Please note that we use different names for the algorithms mentioned and experie
 5) Activate the environment `conda activate hassaku`
 6) Install Hassaku framework `python -m pip install -e .`
 
-## Using the framework
+
+## Datasets
 The following commands assume that the conda environment is already activated (`conda activate hassaku`).
 
 ### Retrieving the datasets
@@ -99,7 +113,9 @@ python data/preprocess_dataset.py \
 --data_path datasets/ml-1m/processed_dataset
 ```
 
-### Run an experiment
+## Experiments
+### Run a single experiment
+
 For running a single experiment, simply select one of the configs provided 
 in [conf/single/algorithms](conf/single/algorithms) or create your own config file and run it:
 
@@ -180,6 +196,22 @@ options:
                         The number of agents to run in parallel on each GPU
 ```
 
-
 \***Although there are lots of configs defined, due to inplace modification of them, they are by far not an 
 exhaustive list of the experiments that we performed!**
+
+## Citation
+Please cite us the following way
+```
+@inproceedings{ganhoer_moscati2024sibrar,
+    title = {A Multimodal Single-Branch Embedding Network for Recommendation in Cold-Start and Missing Modality Scenarios},
+    author = {Ganhör, Christian and Moscati, Marta and Hausberger, Anna and Nawaz, Shah and Schedl, Markus},
+    booktitle = {Proceedings of the 18th ACM Conference on Recommender Systems (RecSys)},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3640457.3688138},
+    doi = {10.1145/3640457.3688138},
+    pages = {380–390},
+    location = {Bari, Italy},
+    year = {2024}
+}
+```
